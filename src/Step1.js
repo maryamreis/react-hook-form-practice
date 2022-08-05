@@ -1,5 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { MainContainer } from "./components/MainContainer";
+import { Input } from "./components/Input";
+import { Form } from "./components/Form";
+
 export const Step1 = () => {
   const { register, handleSubmit, errors } = useForm();
   const navigate = useNavigate();
@@ -8,21 +12,21 @@ export const Step1 = () => {
     navigate("/step2");
   };
   return (
-    <div>
+    <MainContainer>
       <h2>Step 1</h2>
-      <form>
-        <input
+      <Form>
+        <Input
           {...register("firstName", { required: true })}
           type="text"
-          placeholder="First Name"
+          label="First Name"
         />
-        <input
+        <Input
           {...register("lastName", { required: true })}
           type="text"
-          placeholder="Last Name"
+          label="Last Name"
         />
         <button type="submit">Next</button>
-      </form>
-    </div>
+      </Form>
+    </MainContainer>
   );
 };
