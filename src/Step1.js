@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { MainContainer } from "./components/MainContainer";
 import { PrimaryButton } from "./components/PrimaryButton";
+import { useData } from "./DataContext";
 import { Input } from "./components/Input";
 import { Form } from "./components/Form";
 import Typography from "@material-ui/core/Typography";
@@ -20,11 +21,13 @@ const schema = yup.object().shape({
 });
 
 export const Step1 = () => {
+  const { setValues, data } = useData;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
+    // defaultValues: { firstName: data.firstName, lastName: data.lastName },
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
@@ -33,6 +36,7 @@ export const Step1 = () => {
 
   const onSubmit = (data) => {
     navigate("/step2");
+    setValues(data);
   };
   console.log("error", errors);
   return (
@@ -40,7 +44,7 @@ export const Step1 = () => {
       <Typography component="h2" variant="h5">
         Step 1
       </Typography>
-      <Form>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           {...register("firstName", { required: true })}
           type="text"
